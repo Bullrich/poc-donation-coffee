@@ -1,10 +1,12 @@
-import { ethers } from "ethers";
+import { Contract, ethers } from "ethers";
 import { CONTRACT_ADDRESS } from "src/config/contract";
 import CryptoContract from "../artifacts/contracts/BuyCoffee.sol/BuyCoffee.json";
 import type { BuyCoffee } from "../contracts";
 
-export async function buyCoffee() {
+export async function buyCoffee(nrOfCoffees: number = 1): Promise<ethers.ContractTransaction> {
+    console.log("getting coffee!");
     if (!window.ethereum) {
+        console.log('no ethereum!');
         return;
     }
 
@@ -15,11 +17,12 @@ export async function buyCoffee() {
         provider.getSigner()
     ) as BuyCoffee;
 
-    const donate = await coffeeContract.donate(
+    const tx = await coffeeContract.donate(
         "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        { value: coffeePrice.mul(3) }
+        { value: coffeePrice.mul(nrOfCoffees) }
     );
-    console.log(donate);
+
+    return tx;
 }
 
 export const coffeePrice = ethers.utils.parseEther("0.0001");
@@ -28,15 +31,15 @@ export async function connectWallet() {
     // walletConnected = false;
     const { ethereum } = window;
     await ethereum
-      .request({ method: 'eth_requestAccounts' })
-      .then((accountList) => {
-        const [firstAccount] = accountList;
-        // account = firstAccount;
-        // walletConnected = true;
-      })
-      .catch((error) => {
-        // walletConnected = false;
-        // connectWalletError = error;
-        console.log('error connecting wallet');
-      });
-  }
+        .request({ method: 'eth_requestAccounts' })
+        .then((accountList) => {
+            const [firstAccount] = accountList;
+            // account = firstAccount;
+            // walletConnected = true;
+        })
+        .catch((error) => {
+            // walletConnected = false;
+            // connectWalletError = error;
+            console.log('error connecting wallet');
+        });
+}

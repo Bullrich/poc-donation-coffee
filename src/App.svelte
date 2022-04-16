@@ -1,6 +1,9 @@
 <script lang="ts">
-	import {buyCoffee, connectWallet }from './helpers/contract';
-		export let name: string;
+	import { buyCoffee, connectWallet } from "./helpers/contract";
+	import { Router, Link, Route } from "svelte-navigator";
+	import DonateCoffee from "./components/DonateCoffee.svelte";
+	import { Container } from "sveltestrap";
+	export let name: string;
 </script>
 
 <svelte:head>
@@ -10,12 +13,28 @@
 	/>
 </svelte:head>
 <main>
-	<h1>{name}</h1>
-	<p>
-		Welcome to {name}!
-	</p>
-	<button on:click={connectWallet}>Connect Wallet!</button>
-	<button on:click={buyCoffee}>Donate me!</button>
+	<Container>
+		<h1>{name}</h1>
+		<p>
+			Welcome to {name}!
+		</p>
+		<Router>
+			<Route path="/">
+				<h2>This is home!</h2>
+				<Link to="coffee/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266">
+					Go to store
+				</Link>
+
+				<DonateCoffee address="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" />
+			</Route>
+			<Route path="coffee/:address" let:params>
+				<h1>The account is {params.address}</h1>
+				<DonateCoffee address={params.address} />
+			</Route>
+		</Router>
+		<button on:click={connectWallet}>Connect Wallet!</button>
+		<button on:click={() => buyCoffee}>Donate me!</button>
+	</Container>
 </main>
 
 <style>
