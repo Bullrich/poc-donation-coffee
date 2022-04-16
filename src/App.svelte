@@ -1,42 +1,6 @@
 <script lang="ts">
-	import ethers from 'ethers';
-import { CONTRACT_ADDRESS } from './config/contract';
-import CryptoContract from './artifacts/contracts/NFT.sol/CryptoExamples.json';
-	export let name: string;
-
-	async function getAllWaves() {
-    if (!window.ethereum) {
-      return;
-    }
-    
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const wavePortalContract = new ethers.Contract(
-      CONTRACT_ADDRESS,
-      CryptoContract.abi,
-      provider
-    );
-
-	wavePortalContract
-    const recievedWaves = await wavePortalContract.getAllWaves();
-    
-    if (!recievedWaves) {
-      waveList = [];
-      return;
-    }
-    
-    const normalizeWave = (wave) => ({
-      reaction: wave.reaction,
-      message: wave.message,
-      waver: wave.waver,
-      timestamp: new Date(wave.timestamp * 1000),
-    });
-    
-    waveList = recievedWaves
-      .map(normalizeWave)
-      .sort((a, b) => b.timestamp - a.timestamp);
-    console.log('waveList: ', waveList);
-    return;
-  }
+	import {buyCoffee, connectWallet }from './helpers/contract';
+		export let name: string;
 </script>
 
 <svelte:head>
@@ -48,8 +12,10 @@ import CryptoContract from './artifacts/contracts/NFT.sol/CryptoExamples.json';
 <main>
 	<h1>{name}</h1>
 	<p>
-		View and mint the beautiful collection of these {name} NFTs!
+		Welcome to {name}!
 	</p>
+	<button on:click={connectWallet}>Connect Wallet!</button>
+	<button on:click={buyCoffee}>Donate me!</button>
 </main>
 
 <style>
