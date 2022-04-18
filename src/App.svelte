@@ -3,6 +3,7 @@
 	import { Router, Link, Route } from "svelte-navigator";
 	import DonateCoffee from "./components/DonateCoffee.svelte";
 	import { Container } from "sveltestrap";
+	import Coffee from "./pages/Coffee.svelte";
 	export let name: string;
 </script>
 
@@ -13,28 +14,15 @@
 	/>
 </svelte:head>
 <main>
-	<Container>
-		<h1>{name}</h1>
-		<p>
-			Welcome to {name}!
-		</p>
-		<Router>
-			<Route path="/">
-				<h2>This is home!</h2>
-				<Link to="coffee/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266">
-					Go to store
-				</Link>
-
-				<DonateCoffee address="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" />
-			</Route>
-			<Route path="coffee/:address" let:params>
-				<h1>The account is {params.address}</h1>
-				<DonateCoffee address={params.address} />
-			</Route>
-		</Router>
-		<button on:click={connectWallet}>Connect Wallet!</button>
-		<button on:click={() => buyCoffee}>Donate me!</button>
-	</Container>
+	<Router>
+		<Route path="/">
+			<Coffee address="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" />
+		</Route>
+		<Route path="coffee/:address" let:params>
+			<h1>The account is {params.address}</h1>
+			<DonateCoffee address={params.address} />
+		</Route>
+	</Router>
 </main>
 
 <style>

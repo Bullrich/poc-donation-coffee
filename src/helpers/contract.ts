@@ -3,7 +3,7 @@ import { CONTRACT_ADDRESS } from "src/config/contract";
 import CryptoContract from "../artifacts/contracts/BuyCoffee.sol/BuyCoffee.json";
 import type { BuyCoffee } from "../contracts";
 
-export async function buyCoffee(nrOfCoffees: number = 1): Promise<ethers.ContractTransaction> {
+export async function buyCoffee(address:string, nrOfCoffees: number = 1): Promise<ethers.ContractTransaction> {
     console.log("getting coffee!");
     if (!window.ethereum) {
         console.log('no ethereum!');
@@ -19,13 +19,17 @@ export async function buyCoffee(nrOfCoffees: number = 1): Promise<ethers.Contrac
 
     const tx = await coffeeContract.donate(
         "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        { value: coffeePrice.mul(nrOfCoffees) }
+        { value: multiply(nrOfCoffees) }
     );
 
     return tx;
 }
 
 export const coffeePrice = ethers.utils.parseEther("0.0001");
+
+export function multiply(mul:number): ethers.BigNumber {
+    return coffeePrice.mul(mul);
+}
 
 export async function connectWallet() {
     // walletConnected = false;
