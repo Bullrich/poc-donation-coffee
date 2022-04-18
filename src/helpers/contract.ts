@@ -1,4 +1,4 @@
-import { Contract, ethers } from "ethers";
+import { ethers } from "ethers";
 import { CONTRACT_ADDRESS } from "src/config/contract";
 import CryptoContract from "../artifacts/contracts/BuyCoffee.sol/BuyCoffee.json";
 import type { BuyCoffee } from "../contracts";
