@@ -1,11 +1,14 @@
 <script lang="ts">
-    import { Button, Tooltip } from "sveltestrap";
-
+    import { Tooltip } from "sveltestrap";
     import DonateCoffee from "../components/DonateCoffee.svelte";
+    import ShareModal from "../components/ShareModal.svelte";
 
     export let address: string;
-    const shortAddress =
-        address.slice(0, 6) + "..." + address.slice(address.length - 4);
+    const shortAddress = `${address.slice(0, 6)}...${address.slice(
+        address.length - 4
+    )}`;
+    let open = false;
+    const toggle = () => (open = !open);
 </script>
 
 <div
@@ -16,7 +19,9 @@
         <div class="inner">
             <h3 class="masthead-brand">Buy me a Crypto Coffee</h3>
             <nav class="nav nav-masthead justify-content-center">
-                <button type="button" class="btn btn-info">Share</button>
+                <button type="button" class="btn btn-info" on:click={toggle}
+                    >Share</button
+                >
             </nav>
         </div>
     </header>
@@ -27,6 +32,7 @@
             {address}
         </Tooltip>
         <DonateCoffee {address} />
+        <ShareModal {open} {address} />
     </main>
 </div>
 

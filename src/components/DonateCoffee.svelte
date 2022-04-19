@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button, Card, CardBody, Col, Input, Tooltip } from "sveltestrap";
-    import { buyCoffee, multiply } from "../helpers/contract";
+    import { buyCoffee } from "../helpers/contract";
     export let address: string;
     let donated: boolean = false;
     let amount: number = 1;

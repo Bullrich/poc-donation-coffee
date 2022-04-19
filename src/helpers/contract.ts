@@ -25,9 +25,9 @@ export async function buyCoffee(address:string, nrOfCoffees: number = 1): Promis
     return tx;
 }
 
-export const coffeePrice = ethers.utils.parseEther("0.0001");
+const coffeePrice = ethers.utils.parseEther("0.0001");
 
-export function multiply(mul:number): ethers.BigNumber {
+function multiply(mul:number): ethers.BigNumber {
     return coffeePrice.mul(mul);
 }
 
