@@ -10,6 +10,8 @@ export async function buyCoffee(address:string, nrOfCoffees: number = 1): Promis
         return;
     }
 
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
+
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const coffeeContract = new ethers.Contract(
         CONTRACT_ADDRESS,
