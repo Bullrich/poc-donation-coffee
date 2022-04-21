@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { buyCoffee, connectWallet } from "./helpers/contract";
-	import { Router, Link, Route } from "svelte-navigator";
-	import DonateCoffee from "./components/DonateCoffee.svelte";
-	import { Container } from "sveltestrap";
+	import { Route,Router } from "svelte-navigator";
 	import Coffee from "./pages/Coffee.svelte";
+	import Landing from "./pages/Landing.svelte";
 	export let name: string;
 </script>
 
@@ -16,11 +14,10 @@
 <main>
 	<Router>
 		<Route path="/">
-			<Coffee address="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" />
+			<Landing />
 		</Route>
 		<Route path="coffee/:address" let:params>
-			<h1>The account is {params.address}</h1>
-			<DonateCoffee address={params.address} />
+			<Coffee address={params.address} />
 		</Route>
 	</Router>
 </main>

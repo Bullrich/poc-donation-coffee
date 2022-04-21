@@ -3,7 +3,7 @@ import { CONTRACT_ADDRESS } from "src/config/contract";
 import CryptoContract from "../artifacts/contracts/BuyCoffee.sol/BuyCoffee.json";
 import type { BuyCoffee } from "../contracts";
 
-export async function buyCoffee(address:string, nrOfCoffees: number = 1): Promise<ethers.ContractTransaction> {
+export async function buyCoffee(address: string, nrOfCoffees: number = 1): Promise<ethers.ContractTransaction> {
     console.log("getting coffee!");
     if (!window.ethereum) {
         console.log('no ethereum!');
@@ -29,23 +29,12 @@ export async function buyCoffee(address:string, nrOfCoffees: number = 1): Promis
 
 const coffeePrice = ethers.utils.parseEther("0.0001");
 
-function multiply(mul:number): ethers.BigNumber {
+function multiply(mul: number): ethers.BigNumber {
     return coffeePrice.mul(mul);
 }
 
-export async function connectWallet() {
-    // walletConnected = false;
+export async function connectWallet(): Promise<string[]> {
     const { ethereum } = window;
-    await ethereum
-        .request({ method: 'eth_requestAccounts' })
-        .then((accountList) => {
-            const [firstAccount] = accountList;
-            // account = firstAccount;
-            // walletConnected = true;
-        })
-        .catch((error) => {
-            // walletConnected = false;
-            // connectWalletError = error;
-            console.log('error connecting wallet');
-        });
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    return accounts;
 }
