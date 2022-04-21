@@ -32,7 +32,7 @@
             {address}
         </Tooltip>
         <DonateCoffee {address} />
-        <ShareModal {open} {address} />
+        <ShareModal {open} />
     </main>
 </div>
 
